@@ -1,6 +1,8 @@
 ## example
 
 ```ts
+// vite.config.ts
+
 import pkg from './package.json'
 
 const qnConfig = {
