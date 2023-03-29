@@ -1,8 +1,13 @@
 ## example
 
+```
+yarn add @ryan-liu/vite-plugin-qiniu-cdn-upload -D
+```
+
 ```ts
 // vite.config.ts
 
+import qiniuPlugin from '@ryan-liu/vite-plugin-qiniu-cdn-upload'
 import pkg from './package.json'
 
 const qnConfig = {
