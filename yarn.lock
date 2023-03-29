@@ -211,16 +211,9 @@
   resolved "https://registry.nlark.com/@types/json-schema/download/@types/json-schema-7.0.9.tgz?cache=0&sync_timestamp=1629708189890&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fjson-schema%2Fdownload%2F%40types%2Fjson-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
   integrity sha1-l+3JA36gw4WFMgsolk3eOznkZg0=
 
-"@types/lodash-es@^4.17.7":
-  version "4.17.7"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types/lodash-es/-/lodash-es-4.17.7.tgz#22edcae9f44aff08546e71db8925f05b33c7cc40"
-  integrity sha512-z0ptr6UI10VlU6l5MYhGwS4mC8DZyYer2mCoyysZtSF7p26zOX8UpbrV0YpNYLGS8K4PUFIyEr62IMFFjveSiQ==
-  dependencies:
-    "@types/lodash" "*"
-
-"@types/lodash@*":
+"@types/lodash@^4.14.192":
   version "4.14.192"
-  resolved "https://mirrors.cloud.tencent.com/npm/@types/lodash/-/lodash-4.14.192.tgz#5790406361a2852d332d41635d927f1600811285"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.192.tgz#5790406361a2852d332d41635d927f1600811285"
   integrity sha512-km+Vyn3BYm5ytMO13k9KTp27O75rbQ0NFw+U//g+PX7VZyjCioXaRFisqSIJRECljcTv73G3i6BpglNGHgUQ5A==
 
 "@types/parse-json@^4.0.0":
@@ -1476,11 +1469,6 @@ load-tsconfig@^0.2.3:
   resolved "https://registry.yarnpkg.com/load-tsconfig/-/load-tsconfig-0.2.5.tgz#453b8cd8961bfb912dea77eb6c168fe8cca3d3a1"
   integrity sha512-IXO6OCs9yg8tMKzfPZ1YmheJbZCiEsnBdcB03l0OcfK9prKnJb96siuHCr5Fl37/yo9DnKU+TLpxzTUspw9shg==
 
-lodash-es@^4.17.21:
-  version "4.17.21"
-  resolved "https://mirrors.cloud.tencent.com/npm/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
-  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
-
 lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.npm.taobao.org/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
@@ -1500,6 +1488,11 @@ lodash.truncate@^4.4.2:
   version "4.4.2"
   resolved "https://registry.npm.taobao.org/lodash.truncate/download/lodash.truncate-4.4.2.tgz#5a350da0b1113b837ecfffd5812cbe58d6eae193"
   integrity sha1-WjUNoLERO4N+z//VgSy+WNbq4ZM=
+
+lodash@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log-symbols@^4.1.0:
   version "4.1.0"

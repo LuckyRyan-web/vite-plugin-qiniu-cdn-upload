@@ -1,7 +1,7 @@
 import qiniu from 'qiniu'
 import globby from 'globby'
 import { Plugin } from 'vite'
-import _ from 'lodash-es'
+import _ from 'lodash'
 
 export interface Options {
     accessKey: string
