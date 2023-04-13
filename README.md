@@ -20,6 +20,9 @@ const qnConfig = {
 /** 项目文件夹地址 */
 const basePath = pkg.name
 
+/** cdn 地址 */
+const cdnPrePath = ''
+
 function uploadFileToQN(isUpload: boolean) {
     if (!isUpload) {
         return
@@ -37,6 +40,7 @@ function uploadFileToQN(isUpload: boolean) {
 export default defineConfig({
     plugins: [
         ...,
+        base: process.env.NODE_ENV == 'production' ? cdnPrePath : `./`,
         uploadFileToQN(process.env.NODE_ENV == 'production')
         ...
     ]
