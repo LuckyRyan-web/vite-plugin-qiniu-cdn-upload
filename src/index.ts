@@ -1,6 +1,6 @@
 import qiniu from 'qiniu'
 import globby from 'globby'
-import { Plugin } from 'vite'
+import type { PluginOption } from 'vite'
 import _ from 'lodash'
 
 export interface Options {
@@ -18,6 +18,8 @@ export interface Options {
     prefix?: string
     /** 打包文件目录 */
     distDir?: string
+    /** 是否输出日志 */
+    log?: boolean
 }
 
 enum StatusCode {
@@ -30,9 +32,19 @@ enum StatusCode {
     ExceededLimit = 630,
     /** 指定空间不存在 */
     NoFoundSite = 631,
+    /** 可能是因为 DNS 解析错误，无法正确的访问存储桶地址 */
+    NetWorkError = -1,
 }
 
-export default function qiniuPlugin(options: Options): Plugin {
+function print(isPrint: boolean) {
+    return function (message: any) {
+        if (isPrint) {
+            console.log('qiniu plugin log = ', message)
+        }
+    }
+}
+
+export default function qiniuPlugin(options: Options): PluginOption {
     const {
         accessKey,
         secretKey,
@@ -43,6 +55,7 @@ export default function qiniuPlugin(options: Options): Plugin {
         overwrite = false,
         prefix = '',
         distDir = 'dist',
+        log = true,
     } = options
     const mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
     const putPolicy = new qiniu.rs.PutPolicy({ scope: bucket })
@@ -54,6 +67,8 @@ export default function qiniuPlugin(options: Options): Plugin {
     const formUploader = new qiniu.form_up.FormUploader(config)
     const putExtra = new qiniu.form_up.PutExtra()
 
+    const logger = print(log)
+
     return {
         name: 'qiniu-plugin',
         async writeBundle() {
@@ -64,7 +79,7 @@ export default function qiniuPlugin(options: Options): Plugin {
                     return new Promise((resolve, reject) => {
                         const promises = chunk.map((file) => {
                             if (exclude.test(file)) {
-                                console.log(`文件被排除${file}`)
+                                logger(`文件被排除${file}`)
                                 return Promise.resolve()
                             }
                             const dirPath = file.replace('dist/', '')
@@ -90,16 +105,28 @@ export default function qiniuPlugin(options: Options): Plugin {
                                             reject(respErr)
                                         }
 
-                                        if (respInfo?.statusCode === StatusCode.Success) {
-                                            console.log(`上传成功${dirPath}`)
-                                            resolve(respBody)
-                                        } else {
-                                            if (respInfo?.statusCode === StatusCode.Exist && !overwrite) {
-                                                console.log(`文件已存在${dirPath}`)
+                                        logger(respInfo)
+
+                                        // TODO: 补充剩余常见的错误码
+                                        switch (respInfo?.statusCode) {
+                                            case StatusCode.Success:
+                                                logger(`上传成功${dirPath}`)
                                                 resolve(respBody)
-                                            } else {
+                                                break
+                                            case StatusCode.Exist:
+                                                if (!overwrite) {
+                                                    logger(`文件已存在${dirPath}`)
+                                                    resolve(respBody)
+                                                } else {
+                                                    // TODO: 补充覆盖文件的方法
+                                                    reject(respBody)
+                                                }
+                                                break
+                                            case StatusCode.NetWorkError:
+                                                reject('DNS 解析错误，无法正确访问存储桶地址')
+                                                break
+                                            default:
                                                 reject(respBody)
-                                            }
                                         }
                                     }
                                 )
@@ -107,7 +134,7 @@ export default function qiniuPlugin(options: Options): Plugin {
                         })
                         Promise.all(promises)
                             .then((res) => {
-                                console.log(`上传成功${res.length}个文件`)
+                                logger(`上传成功${res.length}个文件`)
                                 resolve(res)
                             })
                             .catch((err) => {
