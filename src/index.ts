@@ -20,6 +20,18 @@ export interface Options {
     distDir?: string
 }
 
+enum StatusCode {
+    Success = 200,
+    /** 指定资源不存在或已被删除 */
+    NoFound = 612,
+    /** 资源已经存在 */
+    Exist = 614,
+    /** 已创建的空间数量达到上限，无法创建新空间 */
+    ExceededLimit = 630,
+    /** 指定空间不存在 */
+    NoFoundSite = 631,
+}
+
 export default function qiniuPlugin(options: Options): Plugin {
     const {
         accessKey,
@@ -77,18 +89,19 @@ export default function qiniuPlugin(options: Options): Plugin {
                                         if (respErr) {
                                             reject(respErr)
                                         }
-                                        if (respInfo?.statusCode === 200) {
+
+                                        if (respInfo?.statusCode === StatusCode.Success) {
                                             console.log(`上传成功${dirPath}`)
                                             resolve(respBody)
                                         } else {
-                                            if (respInfo?.statusCode === 614 && !overwrite) {
+                                            if (respInfo?.statusCode === StatusCode.Exist && !overwrite) {
                                                 console.log(`文件已存在${dirPath}`)
                                                 resolve(respBody)
                                             } else {
                                                 reject(respBody)
                                             }
                                         }
-                                    },
+                                    }
                                 )
                             })
                         })
@@ -101,7 +114,7 @@ export default function qiniuPlugin(options: Options): Plugin {
                                 reject(err)
                             })
                     })
-                }),
+                })
             )
         },
     }
