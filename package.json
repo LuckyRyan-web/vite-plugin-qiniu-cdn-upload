@@ -1,6 +1,6 @@
 {
     "name": "@ryan-liu/vite-plugin-qiniu-cdn-upload",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "基于 vite 的打包文件上传到七牛云的插件",
     "author": "ryan-liu",
     "main": "dist/index.js",
