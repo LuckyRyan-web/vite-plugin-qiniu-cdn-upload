@@ -1,3 +1,26 @@
+## 参数说明
+
+```ts
+export interface Options {
+    accessKey: string
+    secretKey: string
+    bucket: string
+    exclude?: RegExp
+    /** 七牛云区域 */
+    zone?: string
+    /** 并发数 */
+    concurrent?: number
+    /** 是否覆盖相同文件名的文件 */
+    overwrite?: boolean
+    /** key 前缀 */
+    prefix?: string
+    /** 打包文件目录 */
+    distDir?: string
+    /** 是否输出日志 */
+    log?: boolean
+}
+```
+
 ## example
 
 ```
@@ -40,7 +63,7 @@ function uploadFileToQN(isUpload: boolean) {
 export default defineConfig({
     plugins: [
         ...,
-        base: process.env.NODE_ENV == 'production' ? cdnPrePath : `./`,
+        base: process.env.NODE_ENV == 'production' ? cdnPrePath : `/`,
         uploadFileToQN(process.env.NODE_ENV == 'production')
         ...
     ]
