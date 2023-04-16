@@ -77,18 +77,18 @@ export default function qiniuPlugin(options: Options): Plugin {
                                         if (respErr) {
                                             reject(respErr)
                                         }
-                                        if (respInfo.statusCode === 200) {
+                                        if (respInfo?.statusCode === 200) {
                                             console.log(`上传成功${dirPath}`)
                                             resolve(respBody)
                                         } else {
-                                            if (respInfo.statusCode === 614 && !overwrite) {
+                                            if (respInfo?.statusCode === 614 && !overwrite) {
                                                 console.log(`文件已存在${dirPath}`)
                                                 resolve(respBody)
                                             } else {
                                                 reject(respBody)
                                             }
                                         }
-                                    }
+                                    },
                                 )
                             })
                         })
@@ -101,7 +101,7 @@ export default function qiniuPlugin(options: Options): Plugin {
                                 reject(err)
                             })
                     })
-                })
+                }),
             )
         },
     }
