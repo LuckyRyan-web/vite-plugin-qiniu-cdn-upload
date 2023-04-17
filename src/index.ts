@@ -70,7 +70,7 @@ export default function qiniuPlugin(options: Options): PluginOption {
     const logger = print(log)
 
     return {
-        name: 'qiniu-plugin',
+        name: 'vite-plugin-qiniu-upload',
         async writeBundle() {
             const files = await globby([`${distDir}/**/*`])
             const chunkedFiles = _.chunk(files, concurrent)
